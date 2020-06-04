@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="496.0" prefWidth="988.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.mavenproject1.controller.FichasController">
+   <children>
+      <SplitPane dividerPositions="0.22718052738336714" layoutX="22.0" layoutY="127.0" prefHeight="400.0" prefWidth="966.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: white;">
+               <children>
+                  <ImageView fitHeight="405.0" fitWidth="201.0" layoutX="10.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@IMDD/pantallaficha2.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="40.0" layoutY="20.0" text="BIENVENIDO A LAS">
+                     <font>
+                        <Font name="Arial Black" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="23.0" layoutY="40.0" text="FICHAS DE PERSONAJE">
+                     <font>
+                        <Font name="Arial Black" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="buscaNombre" layoutX="36.0" layoutY="455.0" onKeyReleased="#buscarNombre" />
+                  <Label layoutX="50.0" layoutY="424.0" text="Buscar por Nombre">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="749.0">
+               <children>
+                  <SplitPane dividerPositions="0.8678861788617886" layoutX="-32.0" orientation="VERTICAL" prefHeight="494.0" prefWidth="759.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="687.0" SplitPane.resizableWithParent="false">
+                           <children>
+                              <TableView fx:id="table" layoutX="123.0" layoutY="55.0" prefHeight="402.0" prefWidth="687.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columns>
+                                  <TableColumn fx:id="cfcolumn" prefWidth="64.0" text="CF" />
+                                  <TableColumn fx:id="nombrecolumn" prefWidth="160.0" text="NOMBRE" />
+                                    <TableColumn fx:id="razacolumn" prefWidth="135.0" text="RAZA" />
+                                    <TableColumn fx:id="clasecolumn" prefWidth="139.0" text="CLASE" />
+                                    <TableColumn fx:id="fuerzacolumn" prefWidth="90.0" text="FUERZA" />
+                                    <TableColumn fx:id="agilidadcolumn" prefWidth="86.0" text="AGILIDAD" />
+                                    <TableColumn fx:id="magiacolumn" prefWidth="82.0" text="MAGIA" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #8B8BB2;" SplitPane.resizableWithParent="false">
+                           <children>
+                              <Button layoutX="273.0" layoutY="19.0" mnemonicParsing="false" onAction="#openCrearFicha" style="-fx-background-color: WHITE;" text="CREAR" textFill="#2c9a42">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="672.0" layoutY="12.0" mnemonicParsing="false" onAction="#cancelar" style="-fx-background-color: WHITE; -fx-background-radius: 20;" text="X" textFill="#8b8bb2">
+                                 <font>
+                                    <Font name="Arial Black" size="18.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="381.0" layoutY="19.0" mnemonicParsing="false" onAction="#borrarficha" style="-fx-background-color: WHITE;" text="BORRAR" textFill="#d32121">
+                                 <font>
+                                    <Font name="Arial Black" size="12.0" />
+                                 </font>
+                              </Button>
+                           </children></AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

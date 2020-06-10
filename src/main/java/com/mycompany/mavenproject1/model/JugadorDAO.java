@@ -20,6 +20,7 @@ public class JugadorDAO extends Jugador {
     final String insertar = "INSERT INTO jugador (CD, nombre, edad, correo) VALUES(NULL,?,?,?)";
     final String actualizar = "UPDATE jugador SET nombre = ?, edad = ?, correo = ? WHERE CD = ?";
     final String borrar = "DELETE FROM jugador WHERE CD=?";
+    final String borrarS = "DELETE FROM sesion WHERE CD=? or CD2=?";
 
     private boolean persist;
 
@@ -178,10 +179,13 @@ public class JugadorDAO extends Jugador {
 
     public void remove(Jugador jugador) {
         PreparedStatement ps = null;
+        PreparedStatement ps1 = null;
         try {
             java.sql.Connection conn = ConnectionUtil.getConnection();
             ps = conn.prepareStatement(borrar);
+            ps1 = conn.prepareStatement(borrarS);
             ps.setInt(1, jugador.getCD());
+            ps1.setInt(1, jugador.getCD());
 
             if (ps.executeUpdate() == 0) {
                 throw new SQLException("No se Ha borrado correctamente");

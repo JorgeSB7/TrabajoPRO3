@@ -11,19 +11,25 @@ public class Sesion {
     protected int CS;
     protected int CD;
     protected int CF;
+    protected int CD2;
+    protected int CF2;
     protected String nombre;
     protected int duracion;
 
-    public Sesion(int CS, int CD, int CF, String nombre, int duracion) {
+    public Sesion(int CS, int CD, int CF, int CD2, int CF2, String nombre, int duracion) {
         this.CS = CS;
         this.CD = CD;
         this.CF = CF;
+        this.CD2 = CD2;
+        this.CF2 = CF2;
         this.nombre = nombre;
         this.duracion = duracion;
     }
 
+    
+
     public Sesion() {
-        this(-1, -1, -1, "", -1);
+        this(-1, -1, -1, -1, -1, "", -1);
     }
 
     public int getCS() {
@@ -50,6 +56,22 @@ public class Sesion {
         this.CF = CF;
     }
 
+    public int getCD2() {
+        return CD2;
+    }
+
+    public void setCD2(int CD2) {
+        this.CD2 = CD2;
+    }
+
+    public int getCF2() {
+        return CF2;
+    }
+
+    public void setCF2(int CF2) {
+        this.CF2 = CF2;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -68,12 +90,12 @@ public class Sesion {
 
     @Override
     public String toString() {
-        return "Sesion{" + "CS=" + CS + ", CD=" + CD + ", CF=" + CF + ", nombre=" + nombre + ", duracion=" + duracion + '}';
+        return "Sesion{" + "CS=" + CS + ", CD=" + CD + ", CF=" + CF + ", CD2=" + CD2 + ", CF2=" + CF2 + ", nombre=" + nombre + ", duracion=" + duracion + '}';
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 3;
         return hash;
     }
 
@@ -94,5 +116,6 @@ public class Sesion {
         }
         return true;
     }
+    
 
 }

@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 
 
 public class PrimaryController implements Initializable {
+    
     public void openJugadores() {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Jugadores.fxml"));
         Parent modal;
@@ -152,7 +153,9 @@ public class PrimaryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        List<Sesion> resultado = SesionDAO.selectAll();
+        System.out.println(resultado);
+        
     }
 
   

@@ -16,7 +16,8 @@ import java.util.logging.Logger;
  */
 public class SesionDAO extends Sesion {
 
-    final String borrado = "DELETE FROM sesion WHERE nombre = ?";
+    
+    final String borrar = "DELETE FROM jugador WHERE CS=?";
 
     private boolean persist;
 
@@ -25,13 +26,13 @@ public class SesionDAO extends Sesion {
         persist = false;
     }
 
-    public SesionDAO(int CS, int CD, int CF, String nombre, int duracion) {
-        super(CS, CD, CF, nombre, duracion);
+    public SesionDAO(int CS, int CD, int CF, int CD2, int CF2, String nombre, int duracion) {
+        super(CS, CD, CF, CD2, CF2, nombre, duracion);
         persist = false;
     }
 
-    public SesionDAO(int CD, int CF, String nombre, int duracion) {
-        super(-1, CD, CF, nombre, duracion);
+    public SesionDAO(int CD, int CF, int CD2, int CF2, String nombre, int duracion) {
+        super(-1, CD, CF, CD2, CF2, nombre, duracion);
         persist = false;
     }
 
@@ -39,6 +40,8 @@ public class SesionDAO extends Sesion {
         CS = s.CS;
         CD = s.CD;
         CF = s.CF;
+        CD2 = s.CD2;
+        CF2 = s.CF2;
         nombre = s.nombre;
         duracion = s.duracion;
 
@@ -57,6 +60,8 @@ public class SesionDAO extends Sesion {
                     this.CS = CS;
                     this.CD = rs.getInt("CD");
                     this.CF = rs.getInt("CF");
+                    this.CD2 = rs.getInt("CD2");
+                    this.CF2 = rs.getInt("CF2");
                     this.nombre = rs.getString("nombre");
                     this.duracion = rs.getInt("duracion");
 
@@ -93,6 +98,22 @@ public class SesionDAO extends Sesion {
     }
 
     @Override
+    public void setCD2(int CD2) {
+        super.setCD2(CD2);
+        if (persist) {
+            save();
+        }
+    }
+
+    @Override
+    public void setCF2(int CF2) {
+        super.setCF2(CF2);
+        if (persist) {
+            save();
+        }
+    }
+
+    @Override
     public void setNombre(String nombre) {
         super.setNombre(nombre);
         if (persist) {
@@ -116,23 +137,27 @@ public class SesionDAO extends Sesion {
 
             if (this.CS > 0) {
                 // ACTUALIZAR
-                String q = "UPDATE sesion SET CD = ?, CF = ?, nombre = ?, duracion = ? WHERE CS = ?";
+                String q = "UPDATE sesion SET CD = ?, CF = ?, CD2 = ?, CF2 = ?, nombre = ?, duracion = ? WHERE CS = ?";
                 PreparedStatement ps = csql.prepareStatement(q);
                 ps.setInt(1, CD);
                 ps.setInt(2, CF);
-                ps.setString(3, nombre);
-                ps.setInt(4, duracion);
-                ps.setInt(5, CS);
+                ps.setInt(3, CD2);
+                ps.setInt(4, CF2);
+                ps.setString(5, nombre);
+                ps.setInt(6, duracion);
+                ps.setInt(7, CS);
                 resultado = ps.executeUpdate();
 
             } else {
                 // INSERTAR
-                String q = "INSERT INTO sesion (CS, CD, CF, nombre, duracion) VALUES(NULL,?,?,?,?)";
+                String q = "INSERT INTO sesion (CS, CD, CF, CD2, CF2, nombre, duracion) VALUES(NULL,?,?,?,?,?,?)";
                 PreparedStatement ps = csql.prepareStatement(q, Statement.RETURN_GENERATED_KEYS);
                 ps.setInt(1, CD);
                 ps.setInt(2, CF);
-                ps.setString(3, nombre);
-                ps.setInt(4, duracion);
+                ps.setInt(3, CD2);
+                ps.setInt(4, CF2);
+                ps.setString(5, nombre);
+                ps.setInt(6, duracion);
                 resultado = ps.executeUpdate();
                 try ( ResultSet generatedKeys = ps.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
@@ -178,9 +203,10 @@ public class SesionDAO extends Sesion {
                     j.setCS(rs.getInt("CS"));
                     j.setCD(rs.getInt("CD"));
                     j.setCF(rs.getInt("CF"));
+                    j.setCD2(rs.getInt("CD2"));
+                    j.setCF2(rs.getInt("CF2"));
                     j.setNombre(rs.getString("nombre"));
                     j.setDuracion(rs.getInt("duracion"));
-
                     resultado.add(j);
                 }
             }
@@ -191,23 +217,30 @@ public class SesionDAO extends Sesion {
         return resultado;
     }
 
-    public int remove() {
-        int resultado = -1;
-        if (this.CS > 0) {
-            try {
-                java.sql.Connection csql = ConnectionUtil.getConnection();
-                String q = "DELETE FROM sesion WHERE CS=" + this.CS;
+      public void remove(Sesion sesion) {
+        PreparedStatement ps = null;
+        
+        try {
+            java.sql.Connection conn = ConnectionUtil.getConnection();
+            ps = conn.prepareStatement(borrar);
+            
+            ps.setInt(1, sesion.getCS());
+           
 
-                PreparedStatement ps = csql.prepareStatement(q);
-                resultado = ps.executeUpdate();
+            if (ps.executeUpdate() == 0) {
+                throw new SQLException("No se Ha borrado correctamente");
 
-                if (resultado > 0) {
-                    this.CS = -1;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SesionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SesionDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(SesionDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return resultado;
     }
 }

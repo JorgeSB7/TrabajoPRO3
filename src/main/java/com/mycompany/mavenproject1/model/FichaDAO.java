@@ -21,6 +21,7 @@ public class FichaDAO extends Ficha {
     final String insertar = "INSERT INTO ficha (CF, nombre, raza, clase, FUE, AGI, MAG) VALUES(NULL,?,?,?,?,?,?)";
     final String actualizar = "UPDATE ficha SET nombre = ?, raza = ?, clase = ?, FUE = ?, AGI = ?, MAG = ? WHERE CF = ?";
     final String borrar = "DELETE FROM ficha WHERE CF=?";
+    final String borrarS = "DELETE FROM sesion WHERE CF=? or CF2=?";
 
     private boolean persist;
 
@@ -217,10 +218,13 @@ public class FichaDAO extends Ficha {
 
     public void remove(Ficha ficha) {
         PreparedStatement ps = null;
+        PreparedStatement ps1 = null;
         try {
             java.sql.Connection conn = ConnectionUtil.getConnection();
             ps = conn.prepareStatement(borrar);
+            ps1 = conn.prepareStatement(borrarS);
             ps.setInt(1, ficha.getCF());
+            ps1.setInt(1, ficha.getCF());
 
             if (ps.executeUpdate() == 0) {
                 throw new SQLException("No se Ha borrado correctamente");

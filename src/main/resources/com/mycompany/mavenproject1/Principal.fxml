@@ -60,7 +60,7 @@
                   <Image url="@IMDD/Sesion.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="134.0" fitWidth="149.0" layoutX="567.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="142.0" fitWidth="163.0" layoutX="551.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@IMDD/dados.png" />
                </image>

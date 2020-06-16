@@ -22,6 +22,7 @@ public class FichaDAO extends Ficha {
     final String actualizar = "UPDATE ficha SET nombre = ?, raza = ?, clase = ?, FUE = ?, AGI = ?, MAG = ? WHERE CF = ?";
     final String borrar = "DELETE FROM ficha WHERE CF=?";
     final String borrarS = "DELETE FROM sesion WHERE CF=? or CF2=?";
+    final String select = "SELECT * FROM ficha WHERE CF=";
 
     private boolean persist;
 
@@ -55,8 +56,7 @@ public class FichaDAO extends Ficha {
         Connection c = new Connection("localhost", "basededatos", "root", "");
         try {
             java.sql.Connection conn = ConnectionUtil.getConnection();
-            String q = "SELECT * FROM ficha WHERE CF=" + CF;
-            PreparedStatement ps = conn.prepareStatement(q);
+            PreparedStatement ps = conn.prepareStatement(select);
             ResultSet rs = ps.executeQuery();
             if (rs != null) {
                 if (rs.next()) {

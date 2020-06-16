@@ -1,10 +1,5 @@
 package com.mycompany.mavenproject1.controller;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import com.mycompany.mavenproject1.App;
 import com.mycompany.mavenproject1.model.Ficha;
 import com.mycompany.mavenproject1.model.FichaDAO;
@@ -33,6 +28,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import java.lang.Integer;
 
 /**
  * FXML Controller class
@@ -57,14 +53,14 @@ public class FichasController implements Initializable {
     private TableColumn<Ficha, String> clasecolumn;
 
     @FXML
-    private TableColumn<Ficha, Integer> fuerzacolumn;
+    private TableColumn<Ficha, String> fuerzacolumn;
 
     @FXML
-    private TableColumn<Ficha, Integer> agilidadcolumn;
+    private TableColumn<Ficha, String> agilidadcolumn;
 
     @FXML
-    private TableColumn<Ficha, Integer> magiacolumn;
-    
+    private TableColumn<Ficha, String> magiacolumn;
+
     @FXML
     private TextField buscaNombre;
 
@@ -112,15 +108,18 @@ public class FichasController implements Initializable {
         });
 
         this.fuerzacolumn.setCellValueFactory(eachRowData -> {
-            return new SimpleObjectProperty<>(eachRowData.getValue().getFUE());
+            String FUE = "" + eachRowData.getValue().getFUE();
+            return new SimpleObjectProperty<>(FUE);
         });
 
         this.agilidadcolumn.setCellValueFactory(eachRowData -> {
-            return new SimpleObjectProperty<>(eachRowData.getValue().getAGI());
+            String AGI = "" + eachRowData.getValue().getAGI();
+            return new SimpleObjectProperty<>(AGI);
         });
 
         this.magiacolumn.setCellValueFactory(eachRowData -> {
-            return new SimpleObjectProperty<>(eachRowData.getValue().getMAG());
+            String MAG = "" + eachRowData.getValue().getMAG();
+            return new SimpleObjectProperty<>(MAG);
         });
 
         nombrecolumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -167,6 +166,57 @@ public class FichasController implements Initializable {
                         t.getTablePosition().getRow());
 
                 selected.setClase(t.getNewValue());  //<<- update lista en vista
+
+                FichaDAO dao = new FichaDAO(selected); //update en mysql
+                dao.save();
+            }
+        }
+        );
+
+        fuerzacolumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        fuerzacolumn.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Ficha, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Ficha, String> t) {
+
+                Ficha selected = (Ficha) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow());
+
+                selected.setFUE(Integer.parseInt(t.getNewValue()));  //<<- update lista en vista
+
+                FichaDAO dao = new FichaDAO(selected); //update en mysql
+                dao.save();
+            }
+        }
+        );
+
+        agilidadcolumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        agilidadcolumn.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Ficha, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Ficha, String> t) {
+
+                Ficha selected = (Ficha) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow());
+
+                selected.setAGI(Integer.parseInt(t.getNewValue()));  //<<- update lista en vista
+
+                FichaDAO dao = new FichaDAO(selected); //update en mysql
+                dao.save();
+            }
+        }
+        );
+
+        magiacolumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        magiacolumn.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Ficha, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Ficha, String> t) {
+
+                Ficha selected = (Ficha) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow());
+
+                selected.setMAG(Integer.parseInt(t.getNewValue()));  //<<- update lista en vista
 
                 FichaDAO dao = new FichaDAO(selected); //update en mysql
                 dao.save();
@@ -251,7 +301,7 @@ public class FichasController implements Initializable {
             this.myStage.close();
         }
     }
-    
+
     @FXML
     private void buscarNombre(KeyEvent event) {
         String bnombre = this.buscaNombre.getText();

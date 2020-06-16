@@ -24,13 +24,13 @@ public class CrearSesionController implements Initializable {
 
     @FXML
     private TextField cd;
-    
+
     @FXML
     private TextField cf;
-    
+
     @FXML
     private TextField cd2;
-    
+
     @FXML
     private TextField cf2;
 

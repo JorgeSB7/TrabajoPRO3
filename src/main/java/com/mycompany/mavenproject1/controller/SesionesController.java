@@ -1,10 +1,5 @@
 package com.mycompany.mavenproject1.controller;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import com.mycompany.mavenproject1.App;
 import com.mycompany.mavenproject1.model.Sesion;
 import com.mycompany.mavenproject1.model.SesionDAO;
@@ -48,22 +43,22 @@ public class SesionesController implements Initializable {
     private TableColumn<Sesion, Integer> cscolumn;
 
     @FXML
-    private TableColumn<Sesion, Integer> cdcolumn;
+    private TableColumn<Sesion, String> cdcolumn;
 
     @FXML
-    private TableColumn<Sesion, Integer> cfcolumn;
+    private TableColumn<Sesion, String> cfcolumn;
 
     @FXML
-    private TableColumn<Sesion, Integer> cd2column;
+    private TableColumn<Sesion, String> cd2column;
 
     @FXML
-    private TableColumn<Sesion, Integer> cf2column;
+    private TableColumn<Sesion, String> cf2column;
 
     @FXML
     private TableColumn<Sesion, String> nombrecolumn;
 
     @FXML
-    private TableColumn<Sesion, Integer> duracioncolumn;
+    private TableColumn<Sesion, String> duracioncolumn;
     @FXML
     private TextField buscaNombre;
 
@@ -99,19 +94,23 @@ public class SesionesController implements Initializable {
         });
 
         this.cdcolumn.setCellValueFactory(eachRowData -> {
-            return new SimpleObjectProperty<>(eachRowData.getValue().getCD());
+            String CD = "" + eachRowData.getValue().getCD();
+            return new SimpleObjectProperty<>(CD);
         });
 
         this.cfcolumn.setCellValueFactory(eachRowData -> {
-            return new SimpleObjectProperty<>(eachRowData.getValue().getCF());
+            String CF = "" + eachRowData.getValue().getCF();
+            return new SimpleObjectProperty<>(CF);
         });
 
         this.cd2column.setCellValueFactory(eachRowData -> {
-            return new SimpleObjectProperty<>(eachRowData.getValue().getCD2());
+            String CD2 = "" + eachRowData.getValue().getCD2();
+            return new SimpleObjectProperty<>(CD2);
         });
 
         this.cf2column.setCellValueFactory(eachRowData -> {
-            return new SimpleObjectProperty<>(eachRowData.getValue().getCF2());
+            String CF2 = "" + eachRowData.getValue().getCF2();
+            return new SimpleObjectProperty<>(CF2);
         });
 
         this.nombrecolumn.setCellValueFactory(eachRowData -> {
@@ -119,7 +118,8 @@ public class SesionesController implements Initializable {
         });
 
         this.duracioncolumn.setCellValueFactory(eachRowData -> {
-            return new SimpleObjectProperty<>(eachRowData.getValue().getDuracion());
+            String dur = "" + eachRowData.getValue().getDuracion();
+            return new SimpleObjectProperty<>(dur);
         });
 
         nombrecolumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -132,6 +132,91 @@ public class SesionesController implements Initializable {
                         t.getTablePosition().getRow());
 
                 selected.setNombre(t.getNewValue());  //<<- update lista en vista
+
+                SesionDAO dao = new SesionDAO(selected); //update en mysql
+                dao.save();
+            }
+        }
+        );
+        
+        cdcolumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        cdcolumn.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Sesion, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Sesion, String> t) {
+
+                Sesion selected = (Sesion) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow());
+
+                selected.setCD(Integer.parseInt(t.getNewValue()));  //<<- update lista en vista
+
+                SesionDAO dao = new SesionDAO(selected); //update en mysql
+                dao.save();
+            }
+        }
+        );
+        
+        cfcolumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        cfcolumn.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Sesion, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Sesion, String> t) {
+
+                Sesion selected = (Sesion) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow());
+
+                selected.setCF(Integer.parseInt(t.getNewValue()));  //<<- update lista en vista
+
+                SesionDAO dao = new SesionDAO(selected); //update en mysql
+                dao.save();
+            }
+        }
+        );
+        
+        cd2column.setCellFactory(TextFieldTableCell.forTableColumn());
+        cd2column.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Sesion, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Sesion, String> t) {
+
+                Sesion selected = (Sesion) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow());
+
+                selected.setCD2(Integer.parseInt(t.getNewValue()));  //<<- update lista en vista
+
+                SesionDAO dao = new SesionDAO(selected); //update en mysql
+                dao.save();
+            }
+        }
+        );
+        
+        cf2column.setCellFactory(TextFieldTableCell.forTableColumn());
+        cf2column.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Sesion, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Sesion, String> t) {
+
+                Sesion selected = (Sesion) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow());
+
+                selected.setCF2(Integer.parseInt(t.getNewValue()));  //<<- update lista en vista
+
+                SesionDAO dao = new SesionDAO(selected); //update en mysql
+                dao.save();
+            }
+        }
+        );
+        
+        duracioncolumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        duracioncolumn.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Sesion, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Sesion, String> t) {
+
+                Sesion selected = (Sesion) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow());
+
+                selected.setDuracion(Integer.parseInt(t.getNewValue()));  //<<- update lista en vista
 
                 SesionDAO dao = new SesionDAO(selected); //update en mysql
                 dao.save();

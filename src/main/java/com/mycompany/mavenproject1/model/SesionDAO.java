@@ -15,9 +15,12 @@ import java.util.logging.Logger;
  * @author Jorge
  */
 public class SesionDAO extends Sesion {
-
     
-    final String borrar = "DELETE FROM jugador WHERE CS=?";
+    //Queries
+    final String insertar = "INSERT INTO sesion (CS, CD, CF, CD2, CF2, nombre, duracion) VALUES(NULL,?,?,?,?,?,?)";
+    final String actualizar = "UPDATE sesion SET CD = ?, CF = ?, CD2 = ?, CF2 = ?, nombre = ?, duracion = ? WHERE CS = ?";
+    final String borrar = "DELETE FROM sesion WHERE CS=?";
+    final String select = "SELECT * FROM sesion WHERE CS=";
 
     private boolean persist;
 
@@ -44,7 +47,6 @@ public class SesionDAO extends Sesion {
         CF2 = s.CF2;
         nombre = s.nombre;
         duracion = s.duracion;
-
     }
 
     public SesionDAO(int CS) {
@@ -52,8 +54,7 @@ public class SesionDAO extends Sesion {
 
         try {
             java.sql.Connection conn = ConnectionUtil.getConnection();
-            String q = "SELECT * FROM sesion WHERE CS=" + CS;
-            PreparedStatement ps = conn.prepareStatement(q);
+            PreparedStatement ps = conn.prepareStatement(select);
             ResultSet rs = ps.executeQuery();
             if (rs != null) {
                 if (rs.next()) {
@@ -137,8 +138,7 @@ public class SesionDAO extends Sesion {
 
             if (this.CS > 0) {
                 // ACTUALIZAR
-                String q = "UPDATE sesion SET CD = ?, CF = ?, CD2 = ?, CF2 = ?, nombre = ?, duracion = ? WHERE CS = ?";
-                PreparedStatement ps = csql.prepareStatement(q);
+                PreparedStatement ps = csql.prepareStatement(actualizar);
                 ps.setInt(1, CD);
                 ps.setInt(2, CF);
                 ps.setInt(3, CD2);
@@ -150,8 +150,7 @@ public class SesionDAO extends Sesion {
 
             } else {
                 // INSERTAR
-                String q = "INSERT INTO sesion (CS, CD, CF, CD2, CF2, nombre, duracion) VALUES(NULL,?,?,?,?,?,?)";
-                PreparedStatement ps = csql.prepareStatement(q, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement ps = csql.prepareStatement(insertar, Statement.RETURN_GENERATED_KEYS);
                 ps.setInt(1, CD);
                 ps.setInt(2, CF);
                 ps.setInt(3, CD2);

@@ -55,8 +55,9 @@ public class PrimaryController implements Initializable {
         }
 
     }
+    
     public void openSesion() {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("sesiones.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Sesiones.fxml"));
         Parent modal;
         try {
             modal = fxmlLoader.load();
@@ -84,8 +85,9 @@ public class PrimaryController implements Initializable {
         }
 
     }
+    
     public void openHerramienta() {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("herramientas.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Herramientas.fxml"));
         Parent modal;
         try {
             modal = fxmlLoader.load();
@@ -114,7 +116,7 @@ public class PrimaryController implements Initializable {
 
     }
     public void openFicha() {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("fichas.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Fichas.fxml"));
         Parent modal;
         try {
             modal = fxmlLoader.load();
@@ -150,12 +152,9 @@ public class PrimaryController implements Initializable {
     }
     
     
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        List<Sesion> resultado = SesionDAO.selectAll();
-        System.out.println(resultado);
-        
+      
     }
 
   

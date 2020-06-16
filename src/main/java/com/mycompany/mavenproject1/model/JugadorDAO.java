@@ -21,7 +21,8 @@ public class JugadorDAO extends Jugador {
     final String actualizar = "UPDATE jugador SET nombre = ?, edad = ?, correo = ? WHERE CD = ?";
     final String borrar = "DELETE FROM jugador WHERE CD=?";
     final String borrarS = "DELETE FROM sesion WHERE CD=? or CD2=?";
-
+    final String select = "SELECT * FROM jugador WHERE CD=";
+    
     private boolean persist;
 
     public JugadorDAO() {
@@ -51,7 +52,7 @@ public class JugadorDAO extends Jugador {
 
         try {
             java.sql.Connection conn = ConnectionUtil.getConnection();
-            String q = "SELECT * FROM jugador WHERE CD=" + CD;
+            String q = select + CD;
             PreparedStatement ps = conn.prepareStatement(q);
             ResultSet rs = ps.executeQuery();
             if (rs != null) {

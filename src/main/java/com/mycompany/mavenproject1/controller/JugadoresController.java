@@ -46,7 +46,7 @@ public class JugadoresController implements Initializable {
     private TableColumn<Jugador, String> nombrecolumn;
 
     @FXML
-    private TableColumn<Jugador, Integer> edadcolumn;
+    private TableColumn<Jugador, String> edadcolumn;
 
     @FXML
     private TableColumn<Jugador, String> correocolumn;
@@ -90,9 +90,10 @@ public class JugadoresController implements Initializable {
         this.nombrecolumn.setCellValueFactory(eachRowData -> {
             return new SimpleObjectProperty<>(eachRowData.getValue().getNombre());
         });
-
+        
         this.edadcolumn.setCellValueFactory(eachRowData -> {
-            return new SimpleObjectProperty<>(eachRowData.getValue().getEdad());
+            String edad = "" + eachRowData.getValue().getEdad();
+            return new SimpleObjectProperty<>(edad);
         });
 
         this.correocolumn.setCellValueFactory(eachRowData -> {
@@ -132,6 +133,24 @@ public class JugadoresController implements Initializable {
             }
         }
         );
+        
+        edadcolumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        edadcolumn.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Jugador, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Jugador, String> t) {
+
+                Jugador selected = (Jugador) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow());
+
+                selected.setEdad(Integer.parseInt(t.getNewValue()));  //<<- update lista en vista
+
+                JugadorDAO dao = new JugadorDAO(selected); //update en mysql
+                dao.save();
+            }
+        }
+        );
+        
         table.setEditable(true);
         table.setItems(data);
 

@@ -17,7 +17,7 @@ public class ConnectionUtil {
             return null;
         }
         
-        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         conn=DriverManager.getConnection("jdbc:mysql://"+c.getHost()+"/"+c.getDb()
                 +"?useLegacyDatetimeCode=false&serverTimezone=UTC",c.getUser(),c.getPassword());
         

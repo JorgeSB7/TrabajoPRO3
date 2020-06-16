@@ -1,16 +1,8 @@
 package com.mycompany.mavenproject1.controller;
 
 import com.mycompany.mavenproject1.App;
-import com.mycompany.mavenproject1.model.Ficha;
-import com.mycompany.mavenproject1.model.FichaDAO;
-import com.mycompany.mavenproject1.model.Jugador;
-import com.mycompany.mavenproject1.model.JugadorDAO;
-import com.mycompany.mavenproject1.model.Sesion;
-import com.mycompany.mavenproject1.model.SesionDAO;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
